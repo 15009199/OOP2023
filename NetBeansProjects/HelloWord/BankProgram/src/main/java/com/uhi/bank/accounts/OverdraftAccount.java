@@ -33,5 +33,19 @@ public class OverdraftAccount extends BankAccount {
         this.overdraftLimit = overdraftLimit;
     }
     
+    @Override
+    public void withdraw(double balance) {
+        // Cannot allow a withdrawal of money if it will put the balance below the overdraft limit
+        if ((getBalance() - balance) < getOverdraftLimit()) {
+            System.out.println("Cannot withdraw the requested amount");
+        } else {
+            super.withdraw(balance);
+        }
+        
+    }
     
+    @Override
+    public void displayBalance() {
+        System.out.println("Overdraft balance: "+super.getBalance());
+    }
 }

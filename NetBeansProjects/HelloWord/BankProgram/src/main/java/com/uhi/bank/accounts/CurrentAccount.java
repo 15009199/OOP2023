@@ -13,7 +13,8 @@ public class CurrentAccount extends BankAccount {
     // Single copy to be shared by all instances of the class
     // A static variable can be accessed directly by the class name and doesn’t need any object
     // A final variable can only be initialized once
-    static private final double INTEREST_RATE = 0;
+    static private final double INTEREST_RATE = 5;
+    static private final double LIMIT = 0;
     
     public CurrentAccount() {
         
@@ -25,6 +26,28 @@ public class CurrentAccount extends BankAccount {
 
     public static double getINTEREST_RATE() {
         return INTEREST_RATE;
+    }
+    
+    @Override
+    public void withdraw(double balance) {
+        // Cannot allow a withdrawal of money if it will put the balance below the overdraft limit
+        if ((getBalance() - balance) < LIMIT) {
+            System.out.println("Cannot withdraw the requested amount");
+        } else {
+            super.withdraw(balance);
+        }
+        
+    }
+    
+    @Override
+    public void deposit(double balance) {
+        double balanceWithInterest = balance + INTEREST_RATE;
+        super.deposit(balanceWithInterest);
+    }
+    
+    @Override
+    public void displayBalance() {
+        System.out.println("Current balance: "+super.getBalance());
     }
 
 }
